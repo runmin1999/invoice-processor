@@ -16,7 +16,11 @@ Batch processing tool for invoice PDFs. Automatically extracts invoice informati
 ## Install
 
 ```bash
+# Basic (text-based PDFs only)
 pip install pdfplumber openpyxl gooey
+
+# With OCR support (for scanned/image invoices)
+pip install pdfplumber openpyxl gooey PyMuPDF paddlepaddle paddleocr
 ```
 
 ## Usage
@@ -32,13 +36,15 @@ A GUI window will open with two tabs:
 
 ## Configuration
 
-Edit `config.json` to set company info:
+Edit `config.json`:
 
 ```json
 {
     "expected_company": "Your Company Name",
     "expected_tax_id": "Your Tax ID",
-    "excel_filename": "Invoice Summary.xlsx"
+    "excel_filename": "Invoice Summary.xlsx",
+    "ocr_enabled": true,
+    "ocr_threshold": 50
 }
 ```
 
@@ -47,6 +53,8 @@ Edit `config.json` to set company info:
 | `expected_company` | Company name to validate. Leave empty to skip validation |
 | `expected_tax_id` | Tax ID to validate. Leave empty to skip validation |
 | `excel_filename` | Output Excel filename |
+| `ocr_enabled` | Enable OCR for scanned/image PDFs (requires PaddleOCR) |
+| `ocr_threshold` | Min text length to trigger OCR (default: 50 chars) |
 
 ## Output Structure
 

@@ -14,7 +14,9 @@ import shutil
 import pdfplumber
 from gooey import Gooey, GooeyParser
 
+from config import CONFIG
 from excel_writer import write_excel_batch
+from ocr import is_scanned_pdf, ocr_extract
 from parser import (
     check_company,
     find_duplicates,
@@ -70,6 +72,12 @@ def process_directory(filepaths, filenames, folder_paths, out_dir, root_dir):
 
             with pdfplumber.open(filepath) as pdf:
                 text = pdf.pages[0].extract_text() or ""
+
+            if CONFIG["ocr_enabled"] and is_scanned_pdf(text, CONFIG["ocr_threshold"]):
+                try:
+                    text = ocr_extract(filepath)
+                except Exception:
+                    text = ""
 
             company_ok, tax_ok = check_company(text)
             try:

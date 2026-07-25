@@ -16,7 +16,11 @@
 ## 安装
 
 ```bash
+# 基础版（仅支持文字 PDF）
 pip install pdfplumber openpyxl gooey
+
+# 带 OCR 支持（支持扫描件/图片发票）
+pip install pdfplumber openpyxl gooey PyMuPDF paddlepaddle paddleocr
 ```
 
 ## 使用
@@ -31,13 +35,15 @@ python main.py
 
 ## 配置
 
-编辑 `config.json` 修改公司信息：
+编辑 `config.json`：
 
 ```json
 {
     "expected_company": "你的公司名称",
     "expected_tax_id": "你的税号",
-    "excel_filename": "发票汇总统计.xlsx"
+    "excel_filename": "发票汇总统计.xlsx",
+    "ocr_enabled": true,
+    "ocr_threshold": 50
 }
 ```
 
@@ -46,6 +52,8 @@ python main.py
 | `expected_company` | 要校验的公司名称，留空则跳过校验 |
 | `expected_tax_id` | 要校验的税号，留空则跳过校验 |
 | `excel_filename` | 输出的 Excel 文件名 |
+| `ocr_enabled` | 启用 OCR 识别扫描件/图片发票（需安装 PaddleOCR） |
+| `ocr_threshold` | 触发 OCR 的最小文本长度（默认 50 字符） |
 
 ## 输出结构
 

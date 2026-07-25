@@ -7,6 +7,8 @@ DEFAULT_CONFIG = {
     "expected_company": "",
     "expected_tax_id": "",
     "excel_filename": "发票汇总统计.xlsx",
+    "ocr_enabled": False,
+    "ocr_threshold": 50,
 }
 
 
